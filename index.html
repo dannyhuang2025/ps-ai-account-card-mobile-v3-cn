@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>PS AI 早期播种 · 销售作战卡（移动版）</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1E1446">
+<style>
+:root{--p:#503291;--m:#EB3C96;--c:#2DBECD;--y:#FFC832;--d:#1E1446;--g:#F4F2F8;--t:#5A5670;--line:#E8E4F2;--r:14px;--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--g);color:var(--d);font:15px/1.5 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+button,input,select,textarea{font:inherit}
+.app{max-width:520px;margin:0 auto;min-height:100vh;background:var(--g)}
+.top{background:var(--d);color:#fff;padding:12px 16px 10px}
+.top h1{margin:0;font-size:17px}.top small{display:block;color:#CFC9E6;font-size:11.5px}
+.demo{background:var(--y);color:var(--d);font-size:11.5px;padding:6px 16px;line-height:1.4}
+/* global filters */
+.fbar{position:sticky;top:0;z-index:25;background:#fff;border-bottom:1px solid var(--line);padding:8px 12px;box-shadow:0 2px 8px rgba(30,20,70,.05)}
+.fbar .g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.fbar label{display:block;position:relative}
+.fbar label span{position:absolute;left:10px;top:4px;font-size:10px;color:var(--t);pointer-events:none}
+.fbar select{width:100%;appearance:none;-webkit-appearance:none;border:1px solid var(--line);border-radius:10px;background:#F8F7FC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23503291'/%3E%3C/svg%3E") no-repeat right 9px center;padding:17px 22px 5px 10px;font-size:13.5px;font-weight:700;color:var(--d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fbar select.act{border-color:var(--p);background-color:#EEE9F8}
+.fbar .st{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:12px;color:var(--t)}
+.fbar .st button{border:0;background:none;color:var(--p);font-weight:700;font-size:12px;padding:0}
+.view{display:none;padding:12px 12px calc(84px + var(--safe))}.view.on{display:block}
+.card{background:#fff;border-radius:var(--r);padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(30,20,70,.06)}
+.card h2{margin:0 0 2px;font-size:15.5px;display:flex;align-items:center;gap:8px}
+.card h2 .ic{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:14px}
+.card .cap{font-size:12px;color:var(--t);margin:0 0 10px}
+.sub{font-size:12.5px;color:var(--t)}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:700;color:#fff;white-space:nowrap}
+.HOT{background:var(--m)}.WARM{background:var(--c)}.WATCH{background:#8A84A0}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -12px 12px;padding:0 12px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;font-size:13.5px;color:var(--d)}
+.chips button.on{background:var(--p);border-color:var(--p);color:#fff}
+/* overview */
+.hero2{background:linear-gradient(135deg,#1E1446 0%,#503291 70%,#7B3FA8 100%);color:#fff;border-radius:18px;padding:16px;margin-bottom:12px;position:relative;overflow:hidden}
+.hero2:after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(235,60,150,.18)}
+.hero2 .lab{font-size:12.5px;color:#D9D2EE;position:relative;z-index:1}
+.hero2 .top2{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+.hero2 .big b{font-size:24px;display:block;line-height:1.15}
+.tierbar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:14px 0 6px;background:rgba(255,255,255,.15);position:relative;z-index:1}
+.tierlg{display:flex;gap:12px;font-size:12px;color:#E6E0F5;position:relative;z-index:1}.tierlg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.stat4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
+.stat4 div{background:rgba(255,255,255,.1);border-radius:12px;padding:9px 11px}.stat4 b{display:block;font-size:21px}.stat4 span{font-size:11.5px;color:#D9D2EE}
+.stat4 .warn{background:rgba(235,60,150,.28)}
+.ins{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}.ins:last-child{border:0}.ins .n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.mrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.mrow:last-child{border:0}
+.mrow .nm{width:70px;font-weight:700;font-size:14px;flex:none}.mrow .bars{flex:1;min-width:0}
+.hb{height:9px;border-radius:5px;background:#EEEAF6;overflow:hidden;margin:3px 0}.hb i{display:block;height:100%;border-radius:5px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--t);margin-top:6px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+svg text{font-family:inherit}
+.hm{width:100%;border-collapse:separate;border-spacing:3px;font-size:12px}.hm th{font-weight:600;color:var(--t);font-size:11px}.hm td{text-align:center;border-radius:7px;height:38px;font-weight:700}
+/* pipeline page */
+.pstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.pstat div{background:#fff;border-radius:12px;padding:10px;text-align:center}.pstat b{display:block;font-size:20px}.pstat span{font-size:11px;color:var(--t)}
+.prog{background:#fff;border-radius:var(--r);padding:12px;margin-bottom:10px;box-shadow:0 1px 4px rgba(30,20,70,.06);display:flex;gap:12px}
+.prog .rk{flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:52px}
+.prog .rk small{font-size:11px;color:var(--t);font-weight:700}
+.prog .bd{flex:1;min-width:0}
+.prog .t1{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.prog .t1 b{font-size:16px}
+.mtag{font-size:11px;font-weight:700;padding:1px 8px;border-radius:8px;color:#fff}
+.cd{display:flex;align-items:center;flex-wrap:wrap;gap:4px 6px;margin-top:6px;font-size:13px}.cd b{white-space:nowrap}
+.pill2{padding:2px 9px;border-radius:10px;font-weight:700;font-size:12px;white-space:nowrap}
+.u1{background:#FCE4F0;color:#C0186E}.u2{background:#FFF4D6;color:#9A6B00}.u3{background:#EEE9F8;color:#503291}
+.ministeps{display:flex;gap:2px;margin-top:6px}.ministeps i{flex:1;height:5px;border-radius:3px;background:#E6E3EE}
+.ministeps .done{background:var(--c)}.ministeps .now{background:var(--m)}.ministeps .lock{background:var(--y)}
+.sortbar{display:flex;gap:6px;margin-bottom:10px}.sortbar button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 0;font-size:13px}.sortbar button.on{background:var(--d);color:#fff;border-color:var(--d)}
+/* list */
+.kpis{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 4px;margin:0 -12px 12px;padding-left:12px;scrollbar-width:none}.kpis::-webkit-scrollbar{display:none}
+.kpis div{flex:0 0 124px;background:#fff;border-radius:12px;padding:10px 12px;border-top:4px solid var(--p)}.kpis b{display:block;font-size:20px}.kpis span{font-size:11.5px;color:var(--t)}
+.search{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:15px;outline:none;margin-bottom:10px}
+.acc{background:#fff;border-radius:var(--r);margin-bottom:10px;box-shadow:0 1px 4px rgba(30,20,70,.06);border-left:5px solid var(--m);overflow:hidden}
+.acc .h{display:flex;align-items:center;gap:12px;padding:12px}
+.ring{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:17px;color:#fff}
+.acc .info{flex:1;min-width:0}.acc .info b{font-size:16px}.acc .info .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.mini{font-size:11.5px;background:var(--g);color:var(--t);padding:1px 7px;border-radius:8px}.alert{color:#C0186E;background:#FCE4F0}
+.chev{color:#B9B2D3;font-size:22px}
+.plist{border-top:1px dashed var(--line);background:#FBFAFD;padding:6px 12px 8px}
+.plist .pl{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #F0EDF6;font-size:13px}.plist .pl:last-child{border:0}
+.plist .pl .code{font-weight:700;width:74px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plist .pl .mid{flex:1;min-width:0;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plist .pl .ph{flex:none;font-size:11px;font-weight:700;padding:1px 7px;border-radius:8px}
+.plist .hd{font-size:11.5px;color:var(--p);font-weight:700}
+.sig{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}.sig:last-child{border:0}
+.dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:6px}
+.sec-t{font-size:12.5px;font-weight:700;color:var(--p);margin:4px 0 2px}
+.empty{text-align:center;padding:30px 10px;color:var(--t)}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:var(--safe)}
+.nav .in{display:flex;width:100%;max-width:520px}
+.nav button{flex:1;border:0;background:none;padding:8px 0 10px;color:#8A84A0;font-size:11.5px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.nav button i{font-style:normal;font-size:21px;line-height:1.1}.nav button.on{color:var(--p);font-weight:700}
+/* detail */
+.detail{position:fixed;inset:0;z-index:40;background:var(--g);overflow-y:auto;transform:translateX(100%);transition:transform .25s ease;-webkit-overflow-scrolling:touch}
+.detail.on{transform:none}
+.dwrap{max-width:520px;margin:0 auto;padding-bottom:calc(92px + var(--safe))}
+.hero{background:var(--d);color:#fff;padding:12px 16px 18px;position:sticky;top:0;z-index:5}
+.hero .bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.back{border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:20px;padding:6px 14px;font-size:14px}
+.hero .row{display:flex;align-items:center;gap:14px}.hero h3{margin:0;font-size:21px}.hero .m{color:#CFC9E6;font-size:12.5px}
+.hero .ring{width:58px;height:58px;font-size:21px;border:3px solid rgba(255,255,255,.35)}
+.hero.compact{padding-bottom:10px}.hero.compact .more{display:none}
+.chipline{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.chipline span{background:rgba(255,255,255,.12);border-radius:8px;padding:2px 8px;font-size:11.5px}
+.dbody{padding:12px}
+.qs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.qs div{background:#fff;border-radius:12px;padding:10px;text-align:center}.qs b{display:block;font-size:19px}.qs span{font-size:11px;color:var(--t)}
+details.card{padding:0;overflow:hidden}
+details.card summary{list-style:none;padding:14px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:15.5px;cursor:pointer}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:16px;flex:none}
+details.card summary .hint{margin-left:auto;font-weight:400;font-size:12px;color:var(--t)}
+details.card summary:after{content:"⌄";color:#B9B2D3;font-size:20px;margin-left:6px;transition:transform .2s}
+details[open].card summary:after{transform:rotate(180deg)}
+details.card .bd{padding:0 14px 14px}
+.lbl{font-size:12px;color:var(--t);margin:12px 0 4px;font-weight:700}
+.bar2{height:8px;background:#E6E3EE;border-radius:5px;overflow:hidden;margin:3px 0 9px}.bar2 i{display:block;height:100%}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px}.kv div{background:var(--g);border-radius:10px;padding:9px 10px}.kv span{display:block;font-size:11.5px;color:var(--t)}.kv b{font-size:14px}.kv .full{grid-column:1/-1}
+.box{background:var(--g);border-radius:10px;padding:10px 12px;margin:6px 0;font-size:14px}
+.steps{display:flex;gap:3px;margin:6px 0}.steps div{flex:1;height:30px;border-radius:6px;background:#E6E3EE;display:grid;place-items:center;font-size:10.5px;color:var(--t);text-align:center;line-height:1.1;padding:0 2px}
+.steps .done{background:var(--c);color:#fff}.steps .now{background:var(--m);color:#fff;font-weight:700}.steps .lock{background:var(--y);color:var(--d);font-weight:700}
+.item{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}.item .h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.item.hl{border-color:var(--m);box-shadow:0 0 0 3px #FCE4F0}
+.heat{display:inline-block;width:60px;height:7px;border-radius:4px;background:#E6E3EE;overflow:hidden;vertical-align:middle}.heat i{display:block;height:100%}
+.pill{display:inline-block;background:#EEE9F8;color:var(--p);border-radius:16px;padding:5px 11px;font-size:13px;margin:4px 4px 0 0}
+.chk label{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.chk input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--p)}
+.fbrow{display:flex;flex-direction:column;gap:4px;margin:10px 0}
+.dbody select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14.5px}
+textarea{width:100%;height:200px;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px}
+.btn{border:0;border-radius:12px;padding:12px 14px;color:#fff;font-weight:700;font-size:15px;width:100%;margin-top:8px}
+.abar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:#fff;border-top:1px solid var(--line);padding:8px 10px calc(8px + var(--safe));display:none;justify-content:center}
+.abar.on{display:flex}.abar .in{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;max-width:520px}
+.abar button{border:0;border-radius:12px;padding:8px 0;font-size:12px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:1px;color:#fff}
+.abar button i{font-style:normal;font-size:19px}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-radius:18px 18px 0 0;max-width:520px;margin:0 auto;height:78vh;display:flex;flex-direction:column;transform:translateY(105%);transition:transform .25s;box-shadow:0 -6px 30px rgba(0,0,0,.2);visibility:hidden}
+.sheet.on{transform:none;visibility:visible}
+.mask{position:fixed;inset:0;background:rgba(20,10,40,.45);z-index:55;display:none}.mask.on{display:block}
+.sheet .hd{padding:10px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.chat{flex:1;overflow-y:auto;padding:12px;background:var(--g)}
+.msg{margin:6px 0;padding:9px 12px;border-radius:14px;max-width:86%;white-space:pre-line;font-size:14.5px}
+.me{background:var(--p);color:#fff;margin-left:auto;border-bottom-right-radius:4px}.ai{background:#fff;border-bottom-left-radius:4px}
+.sheet .qk{display:flex;gap:6px;overflow-x:auto;padding:8px 12px 0;scrollbar-width:none}
+.sheet .qk button{flex:none;border:1px solid var(--line);background:#fff;border-radius:16px;padding:6px 12px;font-size:13px}
+.sheet .inp{display:flex;gap:8px;padding:8px 12px calc(10px + var(--safe))}
+.sheet .inp input{flex:1;padding:11px 14px;border:1px solid var(--line);border-radius:22px;font-size:15px;outline:none}
+.sheet .inp button{border:0;background:var(--p);color:#fff;border-radius:22px;padding:0 18px;font-weight:700}
+.toast{position:fixed;left:50%;bottom:calc(96px + var(--safe));transform:translateX(-50%);background:var(--d);color:#fff;padding:10px 18px;border-radius:22px;display:none;z-index:80;font-size:14px;white-space:nowrap}
+.foot{font-size:11px;color:#9A96AA;text-align:center;padding:4px 12px}
+@media(min-width:560px){body{background:#E6E2F0}.app{box-shadow:0 0 30px rgba(0,0,0,.08)}}
+</style></head><body>
+<div class="app">
+<div class="top"><h1>AI 早期播种 · 销售作战卡</h1><small>过程解决方案（PS）中国 · 更新于 2026-10-08 06:00</small></div>
+<div class="demo">⚠ 演示数据：除“公开报道”交易外，其余信息均为虚构示例，请勿对外使用。</div>
+<div class="fbar"><div class="g">
+ <label><span>👤 销售</span><select id="fSales"></select></label>
+ <label><span>📍 省份</span><select id="fProv"></select></label>
+ <label><span>🧬 技术形态</span><select id="fMod"></select></label>
+</div><div class="st"><span id="fst"></span><button id="freset" onclick="resetF()">重置筛选</button></div></div>
+<div class="view on" id="v-sum"><div id="sum"></div></div>
+<div class="view" id="v-pipe"><div id="pipe"></div></div>
+<div class="view" id="v-list">
+ <div class="kpis" id="kpis"></div>
+ <input class="search" id="q" type="search" placeholder="🔍 搜索公司 / 靶点 / 项目代号">
+ <div class="chips" id="filters"></div>
+ <div id="rows"></div>
+</div>
+<div class="view" id="v-sig"><div class="card" id="feed"></div></div>
+<div class="foot">示例数据 · 产品建议需PS应用专家确认</div>
+</div>
+<nav class="nav"><div class="in">
+ <button class="on" data-v="v-sum"><i>📊</i>概览</button>
+ <button data-v="v-pipe"><i>🧪</i>管线热度</button>
+ <button data-v="v-list"><i>🏆</i>客户排名</button>
+ <button data-v="v-sig"><i>⚡</i>最新信号</button>
+</div></nav>
+<div class="detail" id="detail"><div class="dwrap" id="dcontent"></div></div>
+<div class="abar" id="abar"><div class="in">
+ <button style="background:#EB3C96" onclick="toast('已生成Outlook会议邀请（演示）')"><i>📅</i>预约拜访</button>
+ <button style="background:#2DBECD" onclick="toast('已在SFDC创建商机（演示）')"><i>➕</i>SFDC商机</button>
+ <button style="background:#1E1446" onclick="openSec('s-act');document.getElementById('mail').scrollIntoView({behavior:'smooth',block:'center'})"><i>✉️</i>跟进邮件</button>
+ <button style="background:#503291" onclick="openAI()"><i>🤖</i>问AI</button>
+</div></div>
+<div class="mask" id="mask" onclick="closeAI()"></div>
+<div class="sheet" id="sheet">
+ <div class="hd"><b id="aititle">🤖 AI助手</b><button class="back" style="background:var(--g);color:var(--d)" onclick="closeAI()">关闭</button></div>
+ <div class="chat" id="chat"></div><div class="qk" id="qk"></div>
+ <div class="inp"><input id="ain" placeholder="输入问题…" enterkeyhint="send" onkeydown="if(event.key==='Enter')ask(this.value)"><button onclick="ask(document.getElementById('ain').value)">发送</button></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const MOD={
+ "ADC":{c:"#EB3C96",n:"抗体偶联药物（ADC）",what:"抗体 + 连接子 + 细胞毒载荷。两段工艺：单抗生产 + 高活性（HPAPI）偶联。",
+  ps:[["单抗上游","细胞培养基、一次性生物反应器","高"],["单抗下游","Protein A层析、病毒过滤","高"],["偶联与纯化","TFF超滤系统及膜包、精纯层析","高"],["高活性防护","密闭一次性组件、HPAPI处理经验","中"],["工艺开发服务","偶联工艺开发与放大支持","中"]],
+  pain:"国内具备HPAPI产能的CDMO有限；连接子-载荷供应与DAR一致性是关键风险。",size:"单批次价值高；从毒理批到商业化的长期合作。"},
+ "双抗":{c:"#2DBECD",n:"双特异性抗体",what:"同时结合两个靶点的抗体。工艺类似单抗，但纯化更难（错配体、聚体）。",
+  ps:[["上游","平台培养基、一次性生物反应器","高"],["精纯","混合模式/离子交换层析去除错配体","高"],["聚体去除","精纯填料与工艺优化","高"],["病毒清除","病毒过滤","中"],["工艺开发","纯化工艺开发支持","中"]],
+  pain:"产品相关杂质多；纯化收率损失大。",size:"接近单抗的用量，技术附加值更高。"},
+ "CGT":{c:"#503291",n:"细胞与基因治疗（CGT）",what:"病毒载体（AAV/LV）或工程化细胞（如CAR-T）。批量小、工艺复杂、以一次性系统为主。",
+  ps:[["细胞培养","无血清培养基及添加物","高"],["载体纯化","TFF、层析纯化","高"],["过滤","除菌与病毒安全过滤","中"],["一次性系统","生物反应器、混合袋","中"],["检测服务","生物安全检测","中"]],
+  pain:"产率低、空/满壳比例、生产成本高、GMP放大困难。",size:"用量较小但单价高；工艺申报后锁定性强。"},
+ "基因编辑":{c:"#503291",n:"基因编辑（碱基编辑/CRISPR）",what:"通过编辑工具修饰基因，常用LNP或病毒载体递送，或体外编辑细胞。",
+  ps:[["mRNA/gRNA原料","IVT原料、核苷酸","高"],["递送系统","脂质/LNP原料、TFF","高"],["细胞处理","培养基","中"],["过滤","除菌过滤","中"]],
+  pain:"递送效率、脱靶控制、原料合规文件。",size:"早期用量小，平台可延伸至多条管线。"}
+};
+const SIGC={"融资":"#EB3C96","交易":"#FFC832","招聘":"#2DBECD","监管":"#503291","会议":"#8A84A0"};
+const A=[
+{n:"科伦博泰",city:"成都 · 示例位置",ll:[30.66,104.06],mod:"ADC",target:"TROP2 / CLDN18.2 / c-MET",ind:"实体瘤",stage:2,score:[28,24,16,25],
+ hc:1350,hcg:"+18%",fund:"港股上市 · 年内配售约 HKD 2.1B（示例）",inv:"上市公司 + 战略股东（示例）",cash:"> 48 个月",
+ deal:{p:"默沙东",t:"多资产ADC授权",v:"约 USD 11B（7个ADC资产）",d:"2022–2024",pub:1},
+ progs:[["SKB-501","ADC","新靶点（示例）","胃癌","先导优化","细胞株构建 2027 Q1"],["SKB-610","ADC","双表位（示例）","肺癌","IND申报准备","毒理批 2027 Q2"]],
+ trig:[["交易","多资产合作持续推进，新增早期ADC项目","2026-09-28"],["招聘","发布 8 个偶联工艺/分析岗位","2026-09-20"]],
+ ppl:[["张博士","CMC副总裁","决策者",2,"2026-03 行业会议"],["李女士","偶联工艺总监","影响者",4,"2026-08 技术交流"],["王先生","采购总监","把关者",3,"2026-06 年度议价"]],
+ cmc:"单抗自产 + 偶联部分外包",comp:"竞品A层析填料（实验室）；TFF尚未定型",installed:"实验室水、过滤耗材", owner:"陈经理（AM）",spec:"刘博士（ADC应用专家）",last:"2026-08-15",openOpp:"1 个（实验室耗材续约）"},
+{n:"映恩生物",city:"上海 · 示例位置",ll:[31.23,121.47],mod:"ADC",target:"新一代ADC平台",ind:"肿瘤 / 自免",stage:1,score:[27,24,16,24],
+ hc:420,hcg:"+35%",fund:"港股上市募资约 HKD 1.5B（示例）",inv:"国际医疗基金（示例）",cash:"约 40 个月",
+ deal:{p:"BioNTech",t:"平台级合作",v:"首付款+里程碑（详见公告）",d:"2023–2025",pub:1},
+ progs:[["DB-1420","ADC","B7-H4（示例）","妇科肿瘤","先导优化","工艺开发 2027 Q1"],["DB-2210","双抗ADC","EGFR×HER3（示例）","肺癌","IND申报准备","毒理批 2027 Q1"]],
+ trig:[["交易","平台合作扩展至自免适应症","2026-09-25"],["融资","完成新一轮配售","2026-09-10"],["招聘","招聘工艺放大负责人","2026-09-02"]],
+ ppl:[["周博士","首席技术官","决策者",1,"未接触"],["吴女士","工艺开发高级总监","影响者",2,"2026-05 BPI会议"],["郑先生","供应链总监","把关者",2,"未接触"]],
+ cmc:"全部外包给2家CDMO",comp:"CDMO默认使用竞品B平台",installed:"无直接采购（通过CDMO间接使用部分产品）", owner:"孙经理（AM）",spec:"刘博士（ADC应用专家）",last:"2026-05-20",openOpp:"无"},
+{n:"启德医药",city:"苏州 · 示例位置",ll:[31.30,120.58],mod:"ADC",target:"偶联平台（21个靶点授权）",ind:"肿瘤",stage:1,score:[25,24,15,25],
+ hc:260,hcg:"+40%",fund:"C轮 USD 120M（示例）",inv:"产业基金 + 外资VC（示例）",cash:"约 36 个月",
+ deal:{p:"AimedBio（韩国）",t:"偶联平台授权，21个靶点",v:"总额超 USD 13B",d:"2025-01",pub:1},
+ progs:[["GQ-1010","ADC","HER2（示例）","乳腺癌","IND/I期","GMP批 2027 Q1"],["GQ-2xx","ADC","多靶点（示例）","实体瘤","先导优化","多个工艺开发 2027"]],
+ trig:[["交易","21个靶点同时推进 → 多个偶联工艺需求","2026-09-18"],["招聘","新建偶联中试车间，招聘12人","2026-09-05"]],
+ ppl:[["钱博士","CEO","决策者",2,"2026-04 拜访"],["冯女士","CMC负责人","决策者",3,"2026-07 技术交流"],["何先生","QA总监","影响者",1,"未接触"]],
+ cmc:"自建偶联中试 + 单抗外包",comp:"竞品A TFF已在中试使用",installed:"过滤耗材、色谱试剂", owner:"陈经理（AM）",spec:"刘博士（ADC应用专家）",last:"2026-07-12",openOpp:"1 个（中试TFF评估）"},
+{n:"三生制药",city:"沈阳 · 示例位置",ll:[41.80,123.43],mod:"双抗",target:"PD-1×VEGF 及新一代双抗",ind:"实体瘤",stage:2,score:[26,20,16,24],
+ hc:5200,hcg:"+6%",fund:"上市公司，现金充裕（示例）",inv:"上市公司",cash:"充足",
+ deal:{p:"辉瑞",t:"SSGJ-707海外权益授权",v:"总额超 USD 6B",d:"2025",pub:1},
+ progs:[["SSGJ-8xx","双抗","PD-1×IL-2（示例）","实体瘤","IND申报准备","GMP批 2027 Q2"],["SSGJ-9xx","三抗","示例靶点","血液瘤","先导优化","细胞株 2027"]],
+ trig:[["交易","MNC合作带来全球供应与审计要求","2026-09-15"],["监管","新一代双抗获IND受理（示例）","2026-08-30"]],
+ ppl:[["赵博士","生物药研发副总裁","决策者",3,"2026-02 拜访"],["孙女士","下游工艺总监","影响者",3,"2026-06 技术交流"],["韩先生","集团采购","把关者",4,"2026-09 年度议价"]],
+ cmc:"自有大规模商业化产能",comp:"竞品A与PS双供应",installed:"层析填料、过滤", owner:"李经理（KAM）",spec:"许博士（下游专家）",last:"2026-09-03",openOpp:"2 个（双抗精纯、供应安全协议）"},
+{n:"康方生物",city:"中山 · 示例位置",ll:[22.52,113.39],mod:"双抗",target:"PD-1×VEGF 等多抗平台",ind:"肿瘤 / 自免",stage:2,score:[25,20,16,22],
+ hc:3100,hcg:"+12%",fund:"港股上市，年内配售（示例）",inv:"上市公司",cash:"充足",
+ deal:{p:"Summit Therapeutics",t:"依沃西单抗授权",v:"约 USD 5B",d:"2022",pub:1},
+ progs:[["AK1xx","双抗","示例靶点","自免","先导优化","细胞株 2027 Q1"],["AK2xx","双抗ADC","示例靶点","实体瘤","IND申报准备","毒理批 2027 Q2"]],
+ trig:[["招聘","扩建下游工艺团队","2026-09-12"],["会议","将在BPI China发布多抗平台","2026-10-20"]],
+ ppl:[["林博士","工艺开发副总裁","决策者",2,"2025-11 拜访"],["黄女士","纯化负责人","影响者",3,"2026-04 研讨会"]],
+ cmc:"自有产能 + 新建基地",comp:"竞品B填料为主",installed:"过滤耗材", owner:"梁经理（AM）",spec:"许博士（下游专家）",last:"2026-04-18",openOpp:"无"},
+{n:"传奇生物",city:"南京 · 示例位置",ll:[32.06,118.80],mod:"CGT",target:"新一代CAR-T（示例）",ind:"血液瘤 / 实体瘤",stage:1,score:[24,22,15,18],
+ hc:2000,hcg:"+8%",fund:"美股上市（示例）",inv:"上市公司",cash:"充足",
+ deal:{p:"NMPA",t:"西达基奥仑赛（卡卫荻）附条件批准",v:"—",d:"2025-02",pub:1},
+ progs:[["LB-2xx","CGT","GPRC5D（示例）","多发性骨髓瘤","IND申报准备","慢病毒GMP批 2027 Q1"],["LB-3xx","CGT","实体瘤靶点（示例）","胃癌","先导优化","2027"]],
+ trig:[["监管","商业化产品带动工艺平台升级","2026-09-08"],["招聘","载体工艺科学家 x6","2026-09-01"]],
+ ppl:[["马博士","技术运营副总裁","决策者",2,"2026-01 拜访"],["曹先生","载体工艺总监","影响者",2,"未接触"]],
+ cmc:"自有慢病毒载体平台",comp:"竞品C培养基",installed:"过滤、检测服务", owner:"沈经理（AM）",spec:"蔡博士（CGT专家）",last:"2026-01-22",openOpp:"1 个（载体纯化评估）"},
+{n:"百利天恒",city:"成都 · 示例位置",ll:[30.58,103.95],mod:"ADC",target:"EGFR×HER3 双抗ADC 等",ind:"实体瘤",stage:1,score:[24,22,14,18],
+ hc:1600,hcg:"+15%",fund:"A股上市，定增（示例）",inv:"上市公司",cash:"充足",
+ deal:{p:"海外合作伙伴",t:"双抗ADC全球合作",v:"详见公告",d:"2023",pub:1},
+ progs:[["BL-Mxx","ADC","示例靶点","实体瘤","先导优化","工艺开发 2027"]],
+ trig:[["招聘","偶联中试扩建","2026-08-25"]],
+ ppl:[["罗博士","CMC负责人","决策者",1,"未接触"]],
+ cmc:"自建偶联产能",comp:"未知",installed:"实验室耗材", owner:"陈经理（AM）",spec:"刘博士（ADC应用专家）",last:"—",openOpp:"无"},
+{n:"邦耀生物",city:"上海闵行 · 示例位置",ll:[31.11,121.38],mod:"基因编辑",target:"β-地贫 / 非病毒定点整合CAR-T",ind:"血液病 / 肿瘤",stage:2,score:[19,20,14,10],
+ hc:230,hcg:"+20%",fund:"B+轮 RMB 500M（示例）",inv:"国资基金 + 医疗VC（示例）",cash:"约 24 个月",
+ deal:{p:"—",t:"多个项目进入IND申报阶段",v:"—",d:"公司公开信息",pub:1},
+ progs:[["BRL-101","基因编辑","BCL11A（示例）","β-地贫","IND申报准备","GMP批 2027 Q1"]],
+ trig:[["监管","从IIT转向IND → 进入工艺锁定窗口","2026-09-14"]],
+ ppl:[["蒋博士","CSO","决策者",2,"2026-06 拜访"]],
+ cmc:"自建GMP",comp:"竞品C",installed:"细胞培养基", owner:"孙经理（AM）",spec:"蔡博士（CGT专家）",last:"2026-06-10",openOpp:"无"},
+{n:"正序生物",city:"上海浦东 · 示例位置",ll:[31.20,121.62],mod:"基因编辑",target:"AccuBase® 碱基编辑",ind:"遗传病",stage:1,score:[18,20,13,8],
+ hc:150,hcg:"+25%",fund:"B轮 USD 60M（示例）",inv:"医疗VC（示例）",cash:"约 30 个月",
+ deal:{p:"USPTO",t:"AccuBase® 获美国专利授权",v:"—",d:"2024-08",pub:1},
+ progs:[["CS-101","基因编辑","示例靶点","地中海贫血","先导优化","LNP工艺 2027"]],
+ trig:[["融资","传闻启动新一轮融资（示例）","2026-09-22"]],
+ ppl:[["韦博士","CTO","决策者",1,"未接触"]],
+ cmc:"自研LNP",comp:"本土脂质供应商",installed:"无", owner:"孙经理（AM）",spec:"蔡博士（CGT专家）",last:"—",openOpp:"无"},
+{n:"北科生物（BeiCell）",city:"北京海淀 · 示例位置",ll:[40.03,116.29],mod:"CGT",target:"通用型（off-the-shelf）细胞",ind:"肿瘤 / 自免 / 再生医学",stage:1,score:[17,20,12,6],
+ hc:120,hcg:"+15%",fund:"A+轮 RMB 300M（示例）",inv:"医疗VC（示例）",cash:"约 20 个月",
+ deal:{p:"—",t:"源自北大邓宏魁实验室",v:"—",d:"公司公开信息",pub:1},
+ progs:[["BC-01","CGT","示例靶点","自免","先导优化","细胞放大 2027"]],
+ trig:[["会议","将在细胞治疗大会作报告（示例）","2026-11-05"]],
+ ppl:[["杨博士","工艺负责人","决策者",1,"未接触"]],
+ cmc:"实验室阶段",comp:"未知",installed:"实验室水", owner:"高经理（AM）",spec:"蔡博士（CGT专家）",last:"—",openOpp:"无"}
+];
+const CASES={"ADC":["某华东ADC企业：PS提供偶联TFF工艺开发，IND时间缩短约3个月（示例）","某跨国合作ADC项目：PS一次性组件满足MNC审计要求（示例）"],
+ "双抗":["某双抗企业：精纯工艺优化，错配体去除提升、收率提高约15%（示例）"],
+ "CGT":["某CAR-T企业：慢病毒载体纯化，回收率提升约20%（示例）"],"基因编辑":["某基因编辑企业：LNP过滤收率提升（示例）"]};
+const CONTENT={"ADC":["ADC偶联与纯化白皮书","HPAPI一次性工艺指南","网络研讨会：从毒理批到IND"],"双抗":["双抗纯化策略白皮书","错配体去除应用说明"],"CGT":["慢病毒/AAV纯化指南","CGT一次性工艺手册"],"基因编辑":["LNP工艺与过滤应用说明","mRNA原料合规文件包"]};
+const COMPBC={"竞品A":"强调供应安全、全球法规文件（DMF/审计支持）与本地技术服务响应速度","竞品B":"以工艺开发支持+整体方案切入，避免单一价格比较","竞品C":"突出批间一致性与放大可行性数据","本土":"总拥有成本（TCO）、质量一致性与海外申报支持","未知":"首次拜访先确认现有供应商与痛点"};
+const STG=["药物发现","先导优化","IND申报准备","IND/I期","II期","III期/上市"];
+const DIM=[["公司实力","#EB3C96",30],["技术形态","#2DBECD",25],["靶点","#503291",20],["授权交易","#FFC832",25]];
+const PH=["临床前","I期","II期","III期","商业化"];
+const TODAY="2026-10-08",D30="2026-09-08";
+const days=d=>d==="—"?null:Math.round((new Date(TODAY)-new Date(d))/864e5);
+const PROV=c=>/成都/.test(c)?"四川":/上海/.test(c)?"上海":/苏州|南京/.test(c)?"江苏":/沈阳/.test(c)?"辽宁":/中山|广州|深圳/.test(c)?"广东":/北京/.test(c)?"北京":"其他";
+const CAT=m=>/ADC/.test(m)?"ADC":/双抗|三抗/.test(m)?"双抗":/基因编辑/.test(m)?"基因编辑":/CGT/.test(m)?"CGT":m;
+const MC={"ADC":"#EB3C96","双抗":"#2DBECD","CGT":"#503291","基因编辑":"#F2B200"},MODS=Object.keys(MC);
+const col={HOT:"#EB3C96",WARM:"#2DBECD",WATCH:"#8A84A0"},TN={HOT:"重点",WARM:"培育",WATCH:"观察"};
+const tierOf=v=>v>=80?"HOT":v>=60?"WARM":"WATCH";
+const stIdx=s=>{const i=STG.indexOf(s);return i<0?1:i};
+function cmc(s){const m=s.match(/(20\d\d)\s*Q([1-4])/);if(m){const mo=(m[1]-2026)*12+[2,5,8,11][m[2]-1]-10;return{mo:Math.max(mo,0),lab:m[1]+" Q"+m[2]}}const y=s.match(/20\d\d/);return{mo:y?(y[0]-2026)*12+6-10:12,lab:(y?y[0]:"")+"（季度待定）"}}
+const urg=mo=>mo<=4?["u1","约"+mo+"个月"]:mo<=8?["u2","约"+mo+"个月"]:["u3","约"+mo+"个月"];
+A.forEach(a=>{a.tot=a.score.reduce((x,y)=>x+y,0);a.tier=tierOf(a.tot);a.prov=PROV(a.city);a.d=days(a.last);a.stale=a.d===null||a.d>90});
+A.sort((x,y)=>y.tot-x.tot);
+const PR=[];A.forEach(a=>{a.P=a.progs.map(p=>{const st=stIdx(p[4]),c=cmc(p[5]);const ub=c.mo<=4?16:c.mo<=7?12:c.mo<=9?8:4;
+ const o={a,code:p[0],mod:p[1],cat:CAT(p[1]),target:p[2],ind:p[3],stage:p[4],st,node:p[5],mo:c.mo,pre:st<=2,heat:Math.min(99,Math.round(a.tot*0.55+[8,16,24,0,0,0][st]+(st<=2?ub:0)))};o.tier=tierOf(o.heat);PR.push(o);return o});
+ a.pre=a.P.filter(p=>p.pre);a.changes=a.trig.filter(t=>t[2]<=TODAY&&(a.last==="—"||t[2]>a.last))});
+let F={s:"全部",p:"全部",m:"全部"},filt="全部",qs="",cur=-1,psort="heat";
+const $=id=>document.getElementById(id);
+const store=k=>{try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}},save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',1800)}
+/* ===== global filters ===== */
+const okA=a=>(F.s==="全部"||a.owner===F.s)&&(F.p==="全部"||a.prov===F.p)&&(F.m==="全部"||a.mod===F.m||a.P.some(p=>p.cat===F.m));
+const okP=p=>(F.s==="全部"||p.a.owner===F.s)&&(F.p==="全部"||p.a.prov===F.p)&&(F.m==="全部"||p.cat===F.m);
+const uniq=arr=>[...new Set(arr)];
+function opts(id,list,key){$(id).innerHTML=`<option value="全部">全部</option>`+list.map(v=>`<option value="${v}">${v}（${A.filter(a=>key(a,v)).length}）</option>`).join('');
+ $(id).onchange=e=>{F[{fSales:'s',fProv:'p',fMod:'m'}[id]]=e.target.value;renderAll()}}
+opts('fSales',uniq(A.map(a=>a.owner)).sort(),(a,v)=>a.owner===v);
+opts('fProv',uniq(A.map(a=>a.prov)).sort(),(a,v)=>a.prov===v);
+opts('fMod',MODS,(a,v)=>a.mod===v||a.P.some(p=>p.cat===v));
+function setF(k,v){F[k]=v;$({s:'fSales',p:'fProv',m:'fMod'}[k]).value=v;renderAll()}
+function resetF(){F={s:"全部",p:"全部",m:"全部"};['fSales','fProv','fMod'].forEach(i=>$(i).value="全部");renderAll()}
+function fstat(){const L=A.filter(okA);['fSales','fProv','fMod'].forEach((i,k)=>$(i).classList.toggle('act',$(i).value!=="全部"));
+ const n=Object.values(F).filter(v=>v!=="全部").length;$('fst').innerHTML=`当前：<b>${L.length}</b> 家客户 · <b>${PR.filter(p=>okP(p)&&p.pre).length}</b> 个临床前项目`;$('freset').style.visibility=n?'visible':'hidden'}
+function go(v){document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('on',x.dataset.v===v));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id===v));window.scrollTo(0,0)}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+const ring=(v,c,s=48,f=17)=>`<div class="ring" style="width:${s}px;height:${s}px;font-size:${f}px;background:${c}">${v}</div>`;
+const mtag=c=>`<span class="mtag" style="background:${MC[c]}">${c}</span>`;
+function donut(parts,size,th,center){const R=(size-th)/2,C=2*Math.PI*R,tot=parts.reduce((s,p)=>s+p[1],0)||1;let off=0;
+ let s=`<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"><circle cx="${size/2}" cy="${size/2}" r="${R}" fill="none" stroke="#EEEAF6" stroke-width="${th}"/>`;
+ parts.forEach(p=>{const L=C*p[1]/tot;if(L>0)s+=`<circle cx="${size/2}" cy="${size/2}" r="${R}" fill="none" stroke="${p[2]}" stroke-width="${th}" stroke-dasharray="${Math.max(L-1.5,0)} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 ${size/2} ${size/2})"/>`;off+=L});
+ return s+center+`</svg>`}
+const empty='<div class="card empty">当前筛选条件下没有客户<br><br><button class="btn" style="background:#503291;width:auto;padding:8px 18px" onclick="resetF()">重置筛选</button></div>';
+
+/* ===== OVERVIEW ===== */
+function renderSum(){const L=A.filter(okA),Pp=PR.filter(okP),Pre=Pp.filter(p=>p.pre);
+ if(!L.length){$('sum').innerHTML=empty;return}
+ const avg=Math.round(L.reduce((s,a)=>s+a.tot,0)/L.length),n={HOT:0,WARM:0,WATCH:0};L.forEach(a=>n[a.tier]++);
+ const sigN=L.reduce((s,a)=>s+a.trig.filter(t=>t[2]<=TODAY&&t[2]>=D30).length,0),stale=L.filter(a=>a.stale);
+ const R=30,C=2*Math.PI*R,hc=avg>=80?"#EB3C96":avg>=60?"#2DBECD":"#B9B2D3";
+ const scope=[F.s,F.p,F.m].filter(v=>v!=="全部").join(' · ')||"全部销售 · 全部省份 · 全部形态";
+ let h=`<div class="hero2"><div class="lab">${scope}</div>
+ <div class="top2" style="margin-top:8px"><svg width="92" height="92" viewBox="0 0 92 92"><circle cx="46" cy="46" r="${R}" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="10"/><circle cx="46" cy="46" r="${R}" fill="none" stroke="${hc}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C*avg/100} ${C}" transform="rotate(-90 46 46)"/><text x="46" y="50" text-anchor="middle" fill="#fff" font-size="22" font-weight="800">${avg}</text><text x="46" y="64" text-anchor="middle" fill="#D9D2EE" font-size="8.5">平均热度</text></svg>
+ <div class="big"><span class="lab">客户热度</span><b>${avg>=80?"🔥 高热":avg>=70?"🌡 升温中":"🌱 培育期"}</b><span style="color:#D9D2EE;font-size:13px">${L.length} 家客户 · ${Pre.filter(p=>p.mo<=6).length} 个项目6个月内到CMC节点</span></div></div>
+ <div class="tierbar">${["HOT","WARM","WATCH"].map(t=>`<div style="width:${n[t]/L.length*100}%;background:${col[t]}"></div>`).join('')}</div>
+ <div class="tierlg">${["HOT","WARM","WATCH"].map(t=>`<span><i style="background:${col[t]}"></i>${TN[t]} ${n[t]}</span>`).join('')}</div>
+ <div class="stat4"><div><b>${n.HOT}</b><span>重点客户（≥80分）</span></div><div><b>${Pre.length}</b><span>临床前管线（工艺锁定前）</span></div><div><b>${sigN}</b><span>近30天新信号</span></div><div class="warn" onclick="filt='未拜访>90天';go('v-list');list()"><b>${stale.length} ›</b><span>超90天未拜访客户</span></div></div></div>`;
+ // insights
+ const bym=MODS.map(m=>{const pl=Pre.filter(p=>p.cat===m),al=L.filter(a=>a.mod===m||a.P.some(p=>p.cat===m));return{m,pl,al,n:pl.length,hot:pl.filter(p=>p.tier==="HOT").length,avg:pl.length?Math.round(pl.reduce((s,p)=>s+p.heat,0)/pl.length):0}}).filter(x=>x.n);
+ const topM=[...bym].sort((x,y)=>y.hot-x.hot||y.avg-x.avg)[0];
+ const hotStale=L.filter(a=>a.tier==="HOT"&&a.stale),weak=L.filter(a=>a.ppl.some(p=>p[2]==="决策者"&&p[3]<=1)),urgent=Pre.filter(p=>p.mo<=4).sort((x,y)=>y.heat-x.heat);
+ const ins=[topM?`<b>${topM.m}</b> 管线最热：${topM.n} 个临床前项目，其中 ${topM.hot} 个为重点，平均热度 ${topM.avg}。`:`暂无临床前项目。`,
+  urgent.length?`<b>${urgent.length} 个项目</b>约4个月内到达CMC节点，需优先推进：${urgent.slice(0,3).map(p=>p.a.n+' '+p.code).join('、')}。`:`近4个月内无临近CMC节点的项目。`,
+  hotStale.length?`<b>${hotStale.length} 家重点客户</b>超过90天未拜访：${hotStale.map(a=>a.n).join('、')}。`:`重点客户近90天均有拜访覆盖 ✅`,
+  weak.length?`<b>${weak.length} 家</b>客户的决策者尚未建立关系：${weak.map(a=>a.n).slice(0,3).join('、')}。`:`决策者关系覆盖良好 ✅`];
+ h+=`<div class="card"><h2><span class="ic" style="background:#EEE9F8">🤖</span>AI 洞察</h2><p class="cap">基于评分、管线与拜访记录自动生成</p>${ins.map((t,k)=>`<div class="ins"><span class="n">${k+1}</span><div>${t}</div></div>`).join('')}</div>`;
+ // modality
+ if(bym.length){const dn=donut(bym.map(x=>[x.m,x.n,MC[x.m]]),124,22,`<text x="62" y="62" text-anchor="middle" font-size="22" font-weight="800" fill="#1E1446">${Pre.length}</text><text x="62" y="78" text-anchor="middle" font-size="9.5" fill="#5A5670">临床前项目</text>`);
+ h+=`<div class="card"><h2><span class="ic" style="background:#FCE4F0">🧬</span>按技术形态 Modality</h2><p class="cap">临床前项目分布 · 平均管线热度（点击查看该形态管线）</p>
+ <div style="display:flex;align-items:center;gap:12px"><div style="flex:none">${dn}</div><div style="flex:1">${bym.map(x=>`<div style="display:flex;align-items:center;gap:6px;font-size:13px;margin:5px 0"><i style="width:10px;height:10px;border-radius:3px;background:${MC[x.m]};flex:none"></i><b style="flex:1">${x.m}</b><span>${x.n}个 · ${Math.round(x.n/Pre.length*100)}%</span></div>`).join('')}</div></div>
+ ${bym.map(x=>`<div class="mrow" onclick="setF('m','${x.m}');go('v-pipe')"><span class="nm" style="color:${MC[x.m]}">${x.m}</span><div class="bars"><div class="sub" style="display:flex;justify-content:space-between"><span>平均热度 <b style="color:#1E1446">${x.avg}</b></span><span>${x.al.length}家 · 重点项目${x.hot}</span></div><div class="hb"><i style="width:${x.avg}%;background:${MC[x.m]}"></i></div></div><span class="chev">›</span></div>`).join('')}</div>`}
+ // phase
+ const cnt=STG.map((s,k)=>MODS.map(m=>Pp.filter(p=>p.st===k&&p.cat===m).length)),mx=Math.max(1,...cnt.map(c=>c.reduce((s,v)=>s+v,0)));
+ const W=320,bw=34,gap=(W-20-STG.length*bw)/(STG.length-1),base=140,lx=10+3*bw+2.5*gap+bw/2-gap/2;
+ let ph=`<svg viewBox="0 0 ${W} ${base+20}" width="100%"><rect x="10" y="8" width="${lx-10}" height="${base-8}" fill="#FCE4F0" opacity=".45" rx="6"/><text x="16" y="22" font-size="10" fill="#C0186E" font-weight="700">锁定前 · ${Pre.length}个项目</text><line x1="${lx}" y1="4" x2="${lx}" y2="${base}" stroke="#E0A800" stroke-width="2" stroke-dasharray="4 3"/><text x="${lx+4}" y="14" font-size="9.5" fill="#B58900" font-weight="700">工艺锁定点(IND)</text>`;
+ STG.forEach((s,k)=>{const x=10+k*(bw+gap);let y=base;const tot=cnt[k].reduce((a,b)=>a+b,0);
+  MODS.forEach((m,j)=>{const v=cnt[k][j];if(!v)return;const hh=v/mx*(base-40);y-=hh;ph+=`<rect x="${x}" y="${y}" width="${bw}" height="${hh-1}" fill="${MC[m]}" rx="3"/>`});
+  if(tot)ph+=`<text x="${x+bw/2}" y="${y-4}" text-anchor="middle" font-size="12" font-weight="800" fill="#1E1446">${tot}</text>`;
+  ph+=`<text x="${x+bw/2}" y="${base+14}" text-anchor="middle" font-size="9" fill="#5A5670">${s.replace('/上市','').replace('申报准备','准备')}</text>`});
+ ph+=`<line x1="6" y1="${base}" x2="${W-6}" y2="${base}" stroke="#D9D4E7"/></svg>`;
+ const usedM=MODS.filter(m=>Pp.some(p=>p.cat===m)),usedS=[0,1,2,3].filter(k=>Pp.some(p=>p.st===k)),hmMax=Math.max(1,...usedM.flatMap(m=>usedS.map(k=>Pp.filter(p=>p.st===k&&p.cat===m).length)));
+ h+=`<div class="card"><h2><span class="ic" style="background:#FFF4D6">⏳</span>按研发阶段 Phase</h2><p class="cap">管线项目数（按技术形态分色）· 粉色区域 = 最佳切入窗口</p>${ph}<div class="legend">${usedM.map(m=>`<span><i style="background:${MC[m]}"></i>${m}</span>`).join('')}</div>
+ <div class="lbl" style="margin-top:14px">技术形态 × 阶段 热力图</div><table class="hm"><tr><th></th>${usedS.map(k=>`<th>${STG[k]}</th>`).join('')}</tr>${usedM.map(m=>`<tr><th style="text-align:left">${m}</th>${usedS.map(k=>{const v=Pp.filter(p=>p.st===k&&p.cat===m).length,o=v?0.15+0.85*v/hmMax:0.05;return `<td style="background:rgba(80,50,145,${o});color:${o>.5?'#fff':'#1E1446'}">${v||'·'}</td>`}).join('')}</tr>`).join('')}</table></div>`;
+ // potential matrix
+ const BW=320,BH=240,x0=34,y0=10,pw=BW-x0-10,phh=BH-y0-32,xmn=65,xmx=95,ymn=30,ymx=100;
+ const X=v=>x0+(Math.min(Math.max(v,xmn),xmx)-xmn)/(xmx-xmn)*pw,Y=v=>y0+phh-(Math.min(Math.max(v,ymn),ymx)-ymn)/(ymx-ymn)*phh;
+ let bs=`<svg viewBox="0 0 ${BW} ${BH}" width="100%"><rect x="${X(80)}" y="${y0}" width="${X(95)-X(80)}" height="${Y(80)-y0}" fill="#FCE4F0" opacity=".7"/><rect x="${x0}" y="${y0}" width="${X(80)-x0}" height="${Y(80)-y0}" fill="#EEE9F8" opacity=".7"/><rect x="${X(80)}" y="${Y(80)}" width="${X(95)-X(80)}" height="${Y(30)-Y(80)}" fill="#DDF4F7" opacity=".7"/><rect x="${x0}" y="${Y(80)}" width="${X(80)-x0}" height="${Y(30)-Y(80)}" fill="#F4F2F8"/>
+ <text x="${X(80)+4}" y="${y0+12}" font-size="10" font-weight="700" fill="#C0186E">优先攻坚</text><text x="${x0+4}" y="${y0+12}" font-size="10" font-weight="700" fill="#503291">实力强·待挖掘匹配</text><text x="${X(95)-4}" y="${Y(30)-5}" text-anchor="end" font-size="10" font-weight="700" fill="#1B7F8A">匹配好·待成长</text><text x="${x0+4}" y="${Y(30)-5}" font-size="10" font-weight="700" fill="#8A84A0">持续观察</text>`;
+ [30,50,70,90].forEach(v=>bs+=`<text x="${x0-4}" y="${Y(v)+3}" text-anchor="end" font-size="9" fill="#8A84A0">${v}</text>`);
+ [65,70,75,80,85,90,95].forEach(v=>bs+=`<text x="${X(v)}" y="${BH-18}" text-anchor="middle" font-size="9" fill="#8A84A0">${v}</text>`);
+ bs+=`<text x="${x0+pw/2}" y="${BH-4}" text-anchor="middle" font-size="9.5" fill="#5A5670">技术匹配度 %（形态+靶点）→</text><text x="10" y="${y0+phh/2}" font-size="9.5" fill="#5A5670" transform="rotate(-90 10 ${y0+phh/2})" text-anchor="middle">公司与交易实力 % →</text>`;
+ const pts=L.map(a=>({a,x:X((a.score[1]+a.score[2])/45*100),y:Y((a.score[0]+a.score[3])/55*100),r:8+a.pre.length*2.5}));
+ for(let it=0;it<30;it++)for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const p=pts[i],q=pts[j],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.1,mn=p.r+q.r+1;if(d<mn){const k=(mn-d)/2,ux=dx/d||1,uy=dy/d;p.x-=ux*k;p.y-=uy*k;q.x+=ux*k;q.y+=uy*k}}
+ pts.forEach(o=>{const i=A.indexOf(o.a);bs+=`<g onclick="show(${i})" style="cursor:pointer"><circle cx="${o.x}" cy="${o.y}" r="${o.r}" fill="${MC[o.a.mod]}" fill-opacity=".85" stroke="#fff" stroke-width="1.5"/><text x="${o.x}" y="${o.y+3.5}" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">${i+1}</text></g>`});
+ bs+=`</svg>`;
+ h+=`<div class="card"><h2><span class="ic" style="background:#DDF4F7">💎</span>客户潜力矩阵</h2><p class="cap">横轴 = 技术匹配度 · 纵轴 = 公司与交易实力 · 气泡大小 = 临床前项目数 · 数字 = 客户排名（点击查看）</p>${bs}
+ <div class="legend">${uniq(L.map(a=>a.mod)).map(m=>`<span><i style="background:${MC[m]}"></i>${m}</span>`).join('')}</div>
+ <div class="lbl">优先攻坚客户</div>${L.filter(a=>(a.score[1]+a.score[2])/45>=.8&&(a.score[0]+a.score[3])/55>=.8).map(a=>`<span class="pill" onclick="show(${A.indexOf(a)})">#${A.indexOf(a)+1} ${a.n}</span>`).join('')||'<span class="sub">无</span>'}</div>`;
+ // sales coverage (manager)
+ if(F.s==="全部"){const ow=uniq(L.map(a=>a.owner)).map(o=>{const l=L.filter(a=>a.owner===o);return{o,n:l.length,hot:l.filter(a=>a.tier==="HOT").length,st:l.filter(a=>a.stale).length,pre:l.reduce((s,a)=>s+a.pre.length,0)}}).sort((x,y)=>y.st-x.st||y.hot-x.hot);
+  h+=`<div class="card"><h2><span class="ic" style="background:#FFF4D6">👤</span>销售覆盖情况</h2><p class="cap">90天拜访覆盖率 · 点击切换为该销售视图</p>${ow.map(x=>{const cv=Math.round((x.n-x.st)/x.n*100);return `<div class="mrow" onclick="setF('s','${x.o}');window.scrollTo(0,0)"><span class="nm" style="width:86px;font-size:13px">${x.o}</span><div class="bars"><div class="sub" style="display:flex;justify-content:space-between"><span>${x.n}家 · 重点${x.hot} · 管线${x.pre}</span><span style="color:${x.st?'#C0186E':'#1B7F8A'};font-weight:700">${x.st?x.st+'家超90天':'✓ 全覆盖'}</span></div><div class="hb"><i style="width:${cv}%;background:${cv>=60?'#2DBECD':'#EB3C96'}"></i></div></div><span class="chev">›</span></div>`}).join('')}</div>`}
+ h+=`<button class="btn" style="background:#503291;margin-bottom:8px" onclick="go('v-pipe')">查看临床前管线热度排名 ›</button>`;
+ $('sum').innerHTML=h}
+
+/* ===== PIPELINE HEAT RANKING ===== */
+function renderPipe(){const Pre=PR.filter(p=>okP(p)&&p.pre);
+ if(!Pre.length){$('pipe').innerHTML=empty;return}
+ const avg=Math.round(Pre.reduce((s,p)=>s+p.heat,0)/Pre.length);
+ const sorted=[...Pre].sort(psort==="heat"?(x,y)=>y.heat-x.heat:psort==="cmc"?(x,y)=>x.mo-y.mo||y.heat-x.heat:(x,y)=>y.st-x.st||y.heat-x.heat);
+ const rankH=[...Pre].sort((x,y)=>y.heat-x.heat);
+ let h=`<div class="pstat"><div><b>${Pre.length}</b><span>临床前项目</span></div><div><b style="color:${avg>=80?'#EB3C96':'#2DBECD'}">${avg}</b><span>平均管线热度</span></div><div><b style="color:#C0186E">${Pre.filter(p=>p.mo<=6).length}</b><span>6个月内到CMC节点</span></div></div>`;
+ // chart: urgency x heat
+ const W=320,H=220,x0=30,y0=10,pw=W-x0-12,phh=H-y0-34,X=m=>x0+Math.min(m,14)/14*pw,Y=v=>y0+phh-(Math.max(v,50)-50)/50*phh;
+ let s=`<svg viewBox="0 0 ${W} ${H}" width="100%"><rect x="${x0}" y="${y0}" width="${X(6)-x0}" height="${Y(80)-y0}" fill="#FCE4F0" opacity=".75" rx="4"/><text x="${x0+4}" y="${y0+12}" font-size="10" font-weight="700" fill="#C0186E">🔥 立即行动</text><text x="${X(14)-4}" y="${y0+12}" text-anchor="end" font-size="10" font-weight="700" fill="#503291">提前布局</text><text x="${x0+4}" y="${Y(50)-5}" font-size="10" font-weight="700" fill="#1B7F8A">快速验证</text><text x="${X(14)-4}" y="${Y(50)-5}" text-anchor="end" font-size="10" font-weight="700" fill="#8A84A0">持续观察</text>
+ <line x1="${X(6)}" y1="${y0}" x2="${X(6)}" y2="${Y(50)}" stroke="#D9D4E7" stroke-dasharray="3 3"/><line x1="${x0}" y1="${Y(80)}" x2="${X(14)}" y2="${Y(80)}" stroke="#D9D4E7" stroke-dasharray="3 3"/>`;
+ [50,60,70,80,90,100].forEach(v=>s+=`<text x="${x0-4}" y="${Y(v)+3}" text-anchor="end" font-size="9" fill="#8A84A0">${v}</text>`);
+ [0,3,6,9,12].forEach(m=>s+=`<text x="${X(m)}" y="${H-20}" text-anchor="middle" font-size="9" fill="#8A84A0">${m}月</text>`);
+ s+=`<text x="${x0+pw/2}" y="${H-5}" text-anchor="middle" font-size="9.5" fill="#5A5670">距下一CMC节点（月）→ 越靠左越紧迫</text>`;
+ const pts=rankH.map((p,k)=>({p,k,x:X(p.mo),y:Y(p.heat),r:9}));
+ for(let it=0;it<40;it++)for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const a=pts[i],b=pts[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||.1,mn=19;if(d<mn){const k=(mn-d)/2,ux=dx/d||1,uy=dy/d;a.x-=ux*k;a.y-=uy*k;b.x+=ux*k;b.y+=uy*k}}
+ pts.forEach(o=>s+=`<g onclick="show(${A.indexOf(o.p.a)},'${o.p.code}')" style="cursor:pointer"><circle cx="${o.x}" cy="${o.y}" r="9" fill="${MC[o.p.cat]}" stroke="#fff" stroke-width="1.5"/><text x="${o.x}" y="${o.y+3.5}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#fff">${o.k+1}</text></g>`);
+ s+=`</svg>`;
+ h+=`<div class="card"><h2><span class="ic" style="background:#FCE4F0">🎯</span>管线热度 × CMC紧迫度</h2><p class="cap">数字 = 管线热度排名 · 颜色 = 技术形态（点击查看）</p>${s}<div class="legend">${MODS.filter(m=>Pre.some(p=>p.cat===m)).map(m=>`<span><i style="background:${MC[m]}"></i>${m}</span>`).join('')}</div></div>`;
+ h+=`<div class="sortbar">${[["heat","🔥 按热度"],["cmc","⏰ 按CMC节点"],["st","📈 按阶段"]].map(b=>`<button class="${psort===b[0]?'on':''}" onclick="psort='${b[0]}';renderPipe()">${b[1]}</button>`).join('')}</div>`;
+ h+=sorted.map(p=>{const k=rankH.indexOf(p),u=urg(p.mo);return `<div class="prog" style="border-left:5px solid ${col[p.tier]}" onclick="show(${A.indexOf(p.a)},'${p.code}')">
+ <div class="rk">${ring(p.heat,col[p.tier],46,16)}<small>#${k+1}</small></div>
+ <div class="bd"><div class="t1"><b>${p.code}</b>${mtag(p.cat)}<span class="tag ${p.tier}">${TN[p.tier]}</span></div>
+ <div style="font-size:13.5px;margin-top:2px"><b style="color:#503291">${p.a.n}</b> · ${p.target} · ${p.ind}</div>
+ <div class="ministeps">${STG.slice(0,4).map((x,j)=>`<i class="${j<p.st?'done':j===p.st?'now':j===3?'lock':''}"></i>`).join('')}</div>
+ <div class="cd"><span class="sub">${p.stage} →</span> <b>${p.node}</b> <span class="pill2 ${u[0]}">${u[1]}</span></div>
+ <div class="sub" style="margin-top:3px">👤 ${p.a.owner} · 📍${p.a.prov}${p.a.stale?' · <span style="color:#C0186E;font-weight:700">客户超90天未拜访</span>':''}</div></div><span class="chev" style="align-self:center">›</span></div>`}).join('');
+ h+=`<p class="sub" style="text-align:center">管线热度 = 客户AI评分 + 研发阶段（越接近IND越高）+ CMC节点紧迫度（示例算法）</p>`;
+ $('pipe').innerHTML=h}
+
+/* ===== CUSTOMER LIST ===== */
+function kpi(){const L=A.filter(okA);$('kpis').innerHTML=[[L.filter(a=>a.tier==="HOT").length,"重点客户",col.HOT],[L.reduce((s,a)=>s+a.pre.length,0),"临床前管线","#503291"],[L.reduce((s,a)=>s+a.trig.filter(t=>t[2]<=TODAY&&t[2]>=D30).length,0),"近30天新信号","#2DBECD"],[L.filter(a=>a.stale).length,"超90天未拜访","#C0186E"],[L.filter(a=>a.openOpp!=="无").length+"/"+L.length,"已有SFDC商机","#1E1446"]]
+ .map(k=>`<div style="border-top-color:${k[2]}"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('')}
+const fs=["全部","重点","培育","观察","未拜访>90天"];
+$('filters').innerHTML=fs.map(f=>`<button>${f}</button>`).join('');
+document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{filt=b.textContent;list()});
+$('q').oninput=e=>{qs=e.target.value.toLowerCase();list()};
+function vis(){return A.filter(a=>okA(a)&&(filt==="全部"||TN[a.tier]===filt||(filt==="未拜访>90天"&&a.stale))&&(!qs||(a.n+a.target+a.mod+a.ind+a.P.map(p=>p.code+p.target).join('')).toLowerCase().includes(qs)))}
+const PHC=st=>st<=1?"background:#EEE9F8;color:#503291":st===2?"background:#FCE4F0;color:#C0186E":"background:#E6E3EE;color:#5A5670";
+function accItem(a){const i=A.indexOf(a),PP=F.m==="全部"?a.P:a.P.filter(p=>p.cat===F.m);
+ return `<div class="acc" style="border-left-color:${col[a.tier]}"><div class="h" onclick="show(${i})">${ring(a.tot,col[a.tier])}
+ <div class="info"><b>${i+1}. ${a.n}</b> <span class="tag ${a.tier}">${TN[a.tier]}</span><div class="sub">${a.mod} · ${a.target}</div>
+ <div class="meta"><span class="mini">📍${a.prov}</span><span class="mini">👤${a.owner.split('（')[0]}</span>${a.changes.length?`<span class="mini alert">⚡${a.changes.length}条新信号</span>`:''}${a.stale?`<span class="mini alert">⏰${a.d===null?'未拜访':a.d+'天未访'}</span>`:''}</div></div><span class="chev">›</span></div>
+ <div class="plist"><div class="hd">🧪 管线 ${PP.length} 个 · 临床前 ${PP.filter(p=>p.pre).length} 个</div>${PP.map(p=>{const u=urg(p.mo);return `<div class="pl" onclick="show(${i},'${p.code}')"><span class="code">${p.code}</span><span class="mid">${p.cat} · ${p.target} · ${p.ind}</span><span class="ph" style="${PHC(p.st)}">${p.stage.replace('申报准备','准备')}</span></div>`}).join('')}</div></div>`}
+function list(){document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x.textContent===filt));const v=vis();$('rows').innerHTML=v.length?v.map(accItem).join(''):empty}
+function feed(){const al=A.filter(okA).flatMap(a=>a.trig.map(t=>({a,t}))).sort((x,y)=>y.t[2].localeCompare(x.t[2]));
+ const sig=al.filter(s=>s.t[2]<=TODAY&&s.t[2]>=D30),upc=al.filter(s=>s.t[2]>TODAY).reverse();
+ const it=s=>`<div class="sig" onclick="show(${A.indexOf(s.a)})"><span class="dot" style="background:${SIGC[s.t[0]]}"></span><div style="flex:1"><b>${s.a.n}</b> <span class="sub">· ${s.t[0]} · ${s.a.owner.split('（')[0]}</span><div style="font-size:14px">${s.t[1]}</div><div class="sub">${s.t[2]}</div></div><span class="chev">›</span></div>`;
+ $('feed').innerHTML=(upc.length?`<div class="sec-t">📌 即将发生</div>`+upc.map(it).join(''):'')+`<div class="sec-t" style="margin-top:8px">⚡ 近30天</div>`+(sig.map(it).join('')||'<div class="sub">暂无</div>')}
+function renderAll(){fstat();renderSum();renderPipe();kpi();list();feed()}
+
+/* ===== DETAIL ===== */
+function dist(a,b){const r=x=>x*Math.PI/180,R=6371;const d=Math.sin(r(b[0]-a[0])/2)**2+Math.cos(r(a[0]))*Math.cos(r(b[0]))*Math.sin(r(b[1]-a[1])/2)**2;return 2*R*Math.asin(Math.sqrt(d))}
+function nba(a){const m=a.mod;return a.tier==="HOT"?[`2周内拜访 ${a.ppl[0][0]}（${a.ppl[0][1]}），由 ${a.owner} 牵头`,`邀请 ${a.spec} 同行，携带${m}应用案例`,`提出免费工艺开发可行性评估（4–6周）`,`准备样品包：${MOD[m].ps[0][1]}`,`在SFDC创建商机：“AI早期播种 – ${m}”`,`拜访后48小时内发送跟进邮件并记录反馈`]
+ :a.tier==="WARM"?[`邀请参加${m}技术研讨会/网络研讨会`,`发送内容：${CONTENT[m][0]}`,`每季度技术触达一次，确认CMC时间表`,`出现融资或授权信号时自动升级为重点`]:[`加入市场培育名单`,`持续监测融资与交易信号`]}
+function email(a){const p=a.ppl[0];return `${p[0]}您好，
+
+感谢您抽出时间交流${a.n}在${MOD[a.mod].n}方面的进展。总结如下：
+
+1. 贵司 ${a.progs[0][0]} 项目计划于 ${a.progs[0][5]}，当前重点是工艺可放大性与供应安全。
+2. 默克PS可提供：${MOD[a.mod].ps.slice(0,3).map(x=>x[1]).join('；')}。
+3. 建议下一步：由 ${a.spec} 与贵司工艺团队开展工艺开发可行性评估。
+
+附件《${CONTENT[a.mod][0]}》供参考。
+
+${a.owner.split('（')[0]}
+默克 过程解决方案`}
+const sec=(id,ic,bg,title,hint,body,open)=>`<details class="card" id="${id}" ${open?'open':''}><summary><span class="ic" style="background:${bg}">${ic}</span>${title}<span class="hint">${hint||''}</span></summary><div class="bd">${body}</div></details>`;
+function show(i,code){cur=i;const a=A[i],md=MOD[a.mod],done=store('chk_'+a.n)||[],fb=store('fb_'+a.n);
+ const compKey=Object.keys(COMPBC).find(k=>a.comp.includes(k))||"未知";
+ const near=A.filter(b=>b!==a&&dist(a.ll,b.ll)<350).map(b=>`<span class="pill" onclick="show(${A.indexOf(b)})">${b.n} · ${Math.round(dist(a.ll,b.ll))}km</span>`).join('')||'<span class="sub">350km内无其他Top客户</span>';
+ let h=`<div class="hero" id="hero"><div class="bar"><button class="back" onclick="hide()">‹ 返回</button><span class="tag ${a.tier}">${TN[a.tier]} · #${i+1}</span></div>
+ <div class="row">${ring(a.tot,col[a.tier],58,21)}<div style="min-width:0"><h3>${a.n}</h3><div class="m">${md.n} · ${a.target}</div></div></div>
+ <div class="more"><div class="chipline"><span>📍${a.prov} · ${a.city.split(' ')[0]}</span><span>👤${a.owner}</span><span>🧪${a.spec}</span><span>🕒上次拜访 ${a.last}</span><span>💼SFDC ${a.openOpp}</span></div></div></div>
+ <div class="dbody"><div class="qs"><div><b style="color:#503291">${a.pre.length}</b><span>临床前管线</span></div><div><b style="color:${a.changes.length?'#C0186E':'#1E1446'}">${a.changes.length}</b><span>上次拜访后新信号</span></div><div><b style="color:${a.stale?'#C0186E':'#1B7F8A'}">${a.d===null?'—':a.d+'天'}</b><span>${a.d===null?'从未拜访':'距上次拜访'}</span></div></div>`;
+ h+=sec('s-why','⚡','#FCE4F0','为什么是现在',a.trig.length+'条信号',
+  a.trig.map(t=>`<div class="sig" style="padding:8px 0"><span class="dot" style="background:${SIGC[t[0]]}"></span><div><b>${t[0]}</b>　${t[1]}<div class="sub">${t[2]}${t[2]>TODAY?' · 即将发生':''}</div></div></div>`).join('')+
+  `<div class="lbl">评分构成</div>${DIM.map((d,k)=>`<div style="display:flex;justify-content:space-between;font-size:13.5px"><span>${d[0]}</span><b>${a.score[k]}/${d[2]}</b></div><div class="bar2"><i style="width:${a.score[k]/d[2]*100}%;background:${d[1]}"></i></div>`).join('')}`+
+  `<div class="lbl">相似成功客户</div><div class="box">${CASES[a.mod][0]}</div>`,!code);
+ h+=sec('s-pipe','🧬','#DDF4F7','管线与产品方案',`${a.P.length}个项目`,
+  a.P.map(p=>{const u=urg(p.mo);return `<div class="item ${p.code===code?'hl':''}" id="pg-${p.code}"><div class="h"><div style="display:flex;align-items:center;gap:8px">${p.pre?ring(p.heat,col[p.tier],38,13):''}<div><b>${p.code}</b> ${mtag(p.cat)}<div class="sub">${p.target} · ${p.ind}</div></div></div><span class="tag" style="${PHC(p.st)}">${p.stage}</span></div>
+  <div class="steps" style="margin-top:8px">${STG.slice(0,4).map((s,k)=>`<div class="${k<p.st?'done':k===p.st?'now':k===3?'lock':''}">${s}</div>`).join('')}</div>
+  <div style="font-size:13.5px">🎯 下一CMC节点：<b>${p.node}</b> ${p.pre?`<span class="pill2 ${u[0]}" style="padding:1px 8px;border-radius:9px;font-size:12px;font-weight:700">${u[1]}</span>`:''}</div></div>`}).join('')+
+  `<div class="sub">粉色 = 当前阶段 · 黄色 = 工艺锁定点（IND），须在此前切入</div>
+  <div class="lbl">${md.n} 对PS意味着什么</div><div class="box" style="border-left:4px solid ${md.c}">${md.what}</div><div class="kv"><div class="full"><span>客户痛点</span><b style="font-weight:400;font-size:13.5px">${md.pain}</b></div><div class="full"><span>业务价值</span><b style="font-weight:400;font-size:13.5px">${md.size}</b></div></div>
+  <div class="lbl">推荐产品</div>${md.ps.map(p=>`<div class="item"><div class="h"><div><div class="sub">${p[0]}</div><b style="font-size:14px">${p[1]}</b></div><span class="tag ${p[2]==='高'?'HOT':'WARM'}">${p[2]}</span></div><div style="text-align:right"><a href="#" style="color:#503291;font-size:13px;font-weight:700" onclick="toast('已加入样品申请');return false">申请样品 ›</a></div></div>`).join('')}`,!!code);
+ h+=sec('s-co','🏢','#EEE9F8','公司与交易',a.deal.p,
+  `<div class="kv"><div class="full"><span>最新融资</span><b>${a.fund}</b></div><div><span>员工数</span><b>${a.hc} <small style="color:#2DBECD">${a.hcg}</small></b></div><div><span>现金跑道</span><b>${a.cash}</b></div><div class="full"><span>主要投资方</span><b>${a.inv}</b></div></div>
+  <div class="lbl">授权 / 合作交易</div><div class="item"><div class="h"><b>${a.deal.p}</b><span class="sub">${a.deal.d}</span></div><div>${a.deal.t}</div><div style="font-weight:700;color:#503291">${a.deal.v}</div><div class="sub">${a.deal.pub?'来源：公开报道（请核实）':'示例'}</div></div>
+  <div class="box" style="font-size:13px"><b>对PS的意义：</b>海外合作方通常要求全球合规、供应安全与法规文件支持——早期指定PS的有力理由。</div>
+  <div class="lbl">我方现状</div><div class="kv"><div class="full"><span>当前CMC模式</span><b>${a.cmc}</b></div><div class="full"><span>竞争格局</span><b>${a.comp}</b></div><div class="full"><span>现有默克业务</span><b>${a.installed}</b></div></div>`);
+ h+=sec('s-ppl','👥','#FFF4D6','关键人',a.ppl.length+'位',
+  a.ppl.map(p=>`<div class="item"><div class="h"><div><b>${p[0]}</b> <span class="sub">${p[1]}</span></div><span class="tag" style="background:${p[2]==='决策者'?'#1E1446':p[2]==='影响者'?'#503291':'#8A84A0'}">${p[2]}</span></div>
+  <div style="margin-top:6px;font-size:13px">关系热度 <span class="heat"><i style="width:${p[3]*20}%;background:${p[3]>=3?'#2DBECD':'#EB3C96'}"></i></span> ${p[3]}/5 · <span class="sub">${p[4]}</span></div>
+  <div class="sub" style="margin-top:2px">建议：${p[2]==='决策者'?'高层拜访 + 价值主张':p[2]==='影响者'?'技术交流 + 数据/案例':'TCO、供应安全与合规'}</div></div>`).join('')+
+  `<div class="box" style="font-size:13px">💡 ${a.ppl.some(p=>p[3]<=1)?'存在未接触的关键人，建议通过现有联系人引荐。':'关键人覆盖良好，重点推进决策者。'}${a.ppl.length<3?' 决策链不完整，拜访时补充QA/采购角色。':''}</div>`);
+ h+=sec('s-talk','💬','#EEE9F8','沟通指南','开场·提问·异议',
+  `<div class="lbl" style="margin-top:0">一分钟开场</div><div class="box">了解到${a.n}近期${a.trig[0][1]}。很多${md.n}企业在进入IND前会遇到“${md.pain.split('；')[0]}”的问题。默克PS在这一领域有成熟方案，希望了解贵司 ${a.progs[0][0]} 的工艺规划，看能否帮助缩短IND时间并降低后期变更风险。</div>
+  <div class="lbl">探询问题</div>${["下一批毒理/GMP批次由自产还是CDMO完成？时间点？","海外合作方对供应商资质、法规文件有哪些要求？","目前收率损失主要出现在哪个工艺步骤？","IND申报的工艺是否计划沿用到III期和商业化？","工艺决策由谁主导？采购和QA何时介入？"].map((x,k)=>`<div class="box">${k+1}. ${x}</div>`).join('')}
+  <div class="lbl">异议处理</div>${[["供应商由CDMO决定。","建议三方会谈；强调申办方层面的指定及MNC合规要求。"],["我们还在临床前，太早了。","IND阶段确定的工艺后期更改成本很高——现在以工艺开发支持切入，而非追求用量。"],["价格偏高。","以总拥有成本、收率提升和供应安全比较，而不只看单价。"]].map(o=>`<div class="item"><div class="sub">客户说</div><b>“${o[0]}”</b><div class="sub" style="margin-top:4px">建议回应</div><div style="font-size:14px">${o[1]}</div></div>`).join('')}
+  <div class="lbl">竞争对策</div><div class="box"><b>现状：</b>${a.comp}<br><b>应对：</b>${COMPBC[compKey]}</div>
+  <div class="lbl">可发送资料</div>${CONTENT[a.mod].map(x=>`<span class="pill">📎 ${x}</span>`).join('')}`);
+ h+=sec('s-act','✅','#D9F2E3','行动与反馈',`${done.length}/${nba(a).length} 已完成`,
+  `<div class="chk">${nba(a).map((x,k)=>`<label><input type="checkbox" ${done.includes(k)?'checked':''} onchange="tick('${a.n}',${k},this.checked)">${x}</label>`).join('')}</div>
+  <div class="lbl">拜访反馈（回流AI模型）</div>${a.trig.map((t,k)=>`<div class="fbrow"><span style="font-size:13.5px">${t[1]}</span><select id="fb${k}"><option>待验证</option><option>✔ 属实</option><option>✘ 不属实</option></select></div>`).join('')}
+  <div class="fbrow"><span style="font-size:13.5px">CMC决策时间</span><select id="fbt"><option>未知</option><option>3个月内</option><option>3–6个月</option><option>6–12个月</option><option>&gt;12个月</option></select></div>
+  <div class="fbrow"><span style="font-size:13.5px">商机判断</span><select id="fbo"><option>待定</option><option>有商机</option><option>暂无</option></select></div>
+  <button class="btn" style="background:#503291" onclick="saveFb('${a.n}',${a.trig.length})">提交反馈</button>${fb?`<div class="sub" style="text-align:center;margin-top:4px">上次提交：${fb.time}</div>`:''}
+  <div class="lbl">跟进邮件草稿</div><textarea id="mail">${email(a)}</textarea>
+  <button class="btn" style="background:#1E1446" onclick="copyMail()">📋 复制邮件</button>`);
+ h+=`<div class="card"><h2 style="font-size:14px">🧭 同区域客户（可合并拜访）</h2>${near}</div></div>`;
+ $('dcontent').innerHTML=h;$('detail').classList.add('on');$('abar').classList.add('on');$('detail').scrollTop=0;
+ if(code)setTimeout(()=>{const e=$('pg-'+code);if(e)$('detail').scrollTo({top:e.offsetTop-210,behavior:'smooth'})},280);
+ $('chat').innerHTML=`<div class="msg ai">您好，我已读取 ${a.n} 的信号、管线、关键人和拜访记录。点击下方问题或直接输入。</div>`;
+ $('aititle').textContent='🤖 关于 '+a.n;
+ if(location.hash!=='#acc')history.pushState({d:1},'','#acc')}
+function hide(){if(location.hash==='#acc')history.back();else closeDetail()}
+function closeDetail(){$('detail').classList.remove('on');$('abar').classList.remove('on');closeAI();list()}
+window.addEventListener('popstate',()=>{if(location.hash!=='#acc')closeDetail()});
+$('detail').addEventListener('scroll',()=>{const h=$('hero');if(h)h.classList.toggle('compact',$('detail').scrollTop>60)});
+function openSec(id){const d=$(id);if(d)d.open=true}
+function copyMail(){const t=$('mail');try{navigator.clipboard.writeText(t.value).then(()=>toast('已复制'),()=>{t.select();document.execCommand('copy');toast('已复制')})}catch(e){t.select();document.execCommand('copy');toast('已复制')}}
+function tick(n,k,v){let d=store('chk_'+n)||[];d=v?[...new Set([...d,k])]:d.filter(x=>x!==k);save('chk_'+n,d);const s=document.querySelector('#s-act .hint');if(s)s.textContent=`${d.length}/${nba(A[cur]).length} 已完成`}
+function saveFb(n,c){const r={time:new Date().toLocaleString('zh-CN'),sig:[...Array(c)].map((_,k)=>$('fb'+k).value),t:$('fbt').value,o:$('fbo').value};save('fb_'+n,r);toast('反馈已提交，将用于模型再训练')}
+const QK=["谁是关键决策者？","管线什么时候锁定？","推荐哪些产品？","怎么应对竞争？","下次拜访说什么？","有什么风险？"];
+$('qk').innerHTML=QK.map(q=>`<button onclick="ask('${q}')">${q}</button>`).join('');
+function openAI(){$('sheet').classList.add('on');$('mask').classList.add('on')}
+function closeAI(){$('sheet').classList.remove('on');$('mask').classList.remove('on')}
+function ask(q){if(!q||cur<0)return;const a=A[cur],md=MOD[a.mod],c=$('chat');c.innerHTML+=`<div class="msg me">${q}</div>`;let r;
+ if(/决策|关键人|谁/.test(q)){const d=a.ppl.filter(p=>p[2]==='决策者');r=`决策者：${d.map(p=>p[0]+'（'+p[1]+'，热度'+p[3]+'/5）').join('、')}。\n建议：${d.some(p=>p[3]<=2)?'关系较弱，先通过 '+(a.ppl.find(p=>p[3]>=3)||a.ppl[0])[0]+' 引荐，再安排高层拜访。':'关系良好，直接推进工艺评估提案。'}`}
+ else if(/锁定|管线|节点/.test(q))r=`${a.P.map(p=>`• ${p.code}（${p.cat}）：${p.stage} → ${p.node}${p.pre?'，'+urg(p.mo)[1]:'（已进入临床）'}`).join('\n')}\n建议在最近的CMC节点前2–3个月完成工艺评估提案。`;
+ else if(/产品|推荐/.test(q))r=`优先推荐：\n${md.ps.filter(p=>p[2]==='高').map(p=>'• '+p[0]+'：'+p[1]).join('\n')}\n配合 ${a.progs[0][0]} 的节点（${a.progs[0][5]}）提前2–3个月提供样品。`;
+ else if(/竞争/.test(q)){const k=Object.keys(COMPBC).find(k=>a.comp.includes(k))||"未知";r=`现状：${a.comp}\n对策：${COMPBC[k]}\n可引用：${CASES[a.mod][0]}`}
+ else if(/说什么|拜访|开场/.test(q))r=`建议开场：从“${a.trig[0][1]}”切入，询问对 ${a.progs[0][0]} CMC 时间表的影响。\n目标：确认工艺决策人与时间点，争取工艺开发可行性评估。`;
+ else if(/风险/.test(q))r=`主要风险：\n• ${a.cmc.includes('外包')?'CDMO主导供应商选择':'客户自建产能，技术门槛高'}\n• 现金跑道 ${a.cash}\n• 竞争：${a.comp}\n• ${md.pain.split('；')[0]}${a.stale?'\n• 超过90天未拜访，关系可能降温':''}`;
+ else r=`（演示版）我可以回答决策人、管线节点、产品推荐、竞争、拜访话术和风险相关问题。`;
+ setTimeout(()=>{c.innerHTML+=`<div class="msg ai">${r}</div>`;c.scrollTop=c.scrollHeight},250);c.scrollTop=c.scrollHeight;$('ain').value=''}
+renderAll();
+</script></body></html>
